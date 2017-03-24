@@ -1,8 +1,20 @@
 import types
 from collections import namedtuple
 
+if not hasattr(types, "MappingProxyType"):
+    # to support Python2 platform
+    try:
+        from frozen_dict import FrozenDict as MappingProxyType
+    except ImportError:
+        try:
+            from frozendict import frozendict as MappingProxyType
+        except ImportError:
+            # use default dict instead (making more sense then raising exception)
+            MappingProxyType = dict
 
-def freeze_data(obj, *, allow=frozenset()):
+    types.MappingProxyType = MappingProxyType
+
+def freeze_data(obj, allow=frozenset()):
     """Convert 'obj' recursively to a read-only object but selectively
     allow functions, modules and other hashables, which may not be read-only.
     This means that recursively:
@@ -52,7 +64,7 @@ def freeze_data(obj, *, allow=frozenset()):
         return freeze_data_inner(obj, allow=allow)
 
 
-def freeze_data_inner(obj, *, allow=frozenset()):
+def freeze_data_inner(obj, allow=frozenset()):
     # check type and recursively return a new read-only object
     if isinstance(obj, (str, int, float, bytes, type(None), bool)):
         return obj
