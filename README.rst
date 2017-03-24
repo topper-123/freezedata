@@ -7,10 +7,11 @@ Example usage:
 
     import freezedata
 
-    data = {'a': [1,2,3], 'b': {1,2,3}, 'c': {1:1, 2:2, 3:3}}
+    data = [{'a': [1,2,3], 'b': {1,2,3}}, {1:1, 2:2, 3:3}]
     frozendata = freezedata.freeze_data(data)
     print(frozendata)
-    >> {'a': (1, 2, 3), 'b': frozenset({1, 2, 3}), 'c': mappingproxy({1: 1, 2: 2, 3: 3})}
+    >> (mappingproxy({'a': (1, 2, 3), 'b': frozenset({1, 2, 3})}),
+ mappingproxy({1: 1, 2: 2, 3: 3}))
 
 This is a read-only data structure, that is; there is no direct way to alter this
 data structure from within ``frozendata`` itself (without using some special modules (``gc``,
@@ -20,9 +21,9 @@ For example:
 
 .. code-block:: python
 
-    frozendata[c'][4] = 4
-    >> TypeError: 'mappingproxy' object does not support item assignment
-    del frozendata['b']
+    frozendata[0]['a'][0] = 4
+    >> TypeError: 'tuple' object does not support item assignment
+    del frozendata[1][1]
     >> TypeError: 'mappingproxy' object does not support item deletion
 
 *Notice*: Since a ``mappingproxy`` is not hashable, frozen data
@@ -53,10 +54,10 @@ neither immutable or read-only. By default, using these will result in errors, b
 parameter ``allow`` as one, several or all of ``functions``, ``modules`` , ``classes``
 and ``instances``, these can be used in the new new data structure.
 
-**Functions** are mutable in Python, but sometimes you still want a function in a
+**Functions** have mutable attributes in Python, but sometimes you still want a function in a
 new data structure that won't affect the parent data structure / parent function.
 By setting ``allow='functions'`` or ``allow=['functions']``, the new data structure will
-contain  a *copy* of the included functions:
+contain  a *copy* of the included functions and its public attributes:
 
 .. code-block:: python
 
