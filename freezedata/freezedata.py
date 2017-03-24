@@ -48,7 +48,6 @@ def freeze_data(obj, *, allow=frozenset()):
     if isinstance(obj, types.ModuleType):
         return freeze_class_or_istance_or_module(obj, allow=allow)
     else:
-        print(123)
         return freeze_data_inner(obj, allow=allow)
 
 
