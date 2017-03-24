@@ -8,11 +8,13 @@ with open('README.rst') as readme:
     long_description = readme.read()
 
 setup(name='freezedata',
-      version='2.2.5',
+      version='2.2.7',
       description=description,
       long_description=long_description,
+      url='https://github.com/topper-123/freezedata',
       author='Terji Petersen',
       author_email='terji78@gmail.com',
+      license='MIT License',
       packages=['freezedata'],
       setup_requires=['pytest-runner'],
       tests_require=['pytest'],
