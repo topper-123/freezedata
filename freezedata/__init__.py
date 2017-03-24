@@ -1,8 +1,8 @@
 import os
 from .freezedata import freeze_data
 
-DIR = os.path.dirname(__file__)
-README = os.path.join(DIR, 'README.rst')
+
+__all__ = ['freeze_data']
 
 __doc__ = """
 Recursively convert lists to tuples, sets to frozensets, dicts to mappingproxy etc.
@@ -32,5 +32,3 @@ hashable either::
    >> TypeError: unhashable type: 'mappingproxy'
 """
 
-del os, DIR, README
-del freezedata
