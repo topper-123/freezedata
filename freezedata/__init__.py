@@ -98,3 +98,4 @@ attributes with leading underscores will be ignored:
 
 from .freezedata import freeze_data
 
+__all__ = ['freeze_data']
