@@ -8,7 +8,7 @@ with open('README.rst') as readme:
     long_description = readme.read()
 
 setup(name='freezedata',
-      version='2.2.5',
+      version='2.2.7',
       description=description,
       long_description=long_description,
       author='Terji Petersen',
